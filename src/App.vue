@@ -1,5 +1,7 @@
 <template>
   <div>
+    <p>Post count: {{ countPosts }}</p>
+    <post-form />
     <div
         v-for="post in allPosts"
         class="app"
@@ -11,11 +13,17 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
+import PostForm from "@/store/components/PostForm";
 
 export default {
   name: 'App',
-  computed: mapGetters(['allPosts'])
+  components: {PostForm},
+  computed: mapGetters(['allPosts', 'countPosts']),
+  methods: mapActions(['fetchPosts']),
+  mounted() {
+    this.fetchPosts(10);
+  }
 }
 </script>
 
